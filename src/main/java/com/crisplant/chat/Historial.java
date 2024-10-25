@@ -54,7 +54,7 @@ public class Historial {
      * Displays all chat sessions in the chat history.
      * Each chat session and its messages are printed to the console.
      */
-    public static void showChat() {
+    public static void showHistorial() {
         for (int i = 0; i < historial.length; i++) {
             if (historial[i][0] != null) {
                 System.out.println("Chat " + i + ":");
@@ -122,5 +122,21 @@ public class Historial {
     public static void crearNuevoChat() {
         addChat();
         chatActual = new String[30];
+    }
+
+    /**
+     * Retrieves an array of chat names from the historial.
+     * Each chat name is prefixed with "Chat " followed by its index + 1.
+     * 
+     * @return An array of chat names. The array has a fixed size of 100.
+     */
+    public static String[] getNamesHistorial() {
+        String[] names = new String[100];
+        for (int i = 0; i < historial.length; i++) {
+            if (historial[i][0] != null) {
+                names[i] = "Chat " + (i + 1);
+            }
+        }
+        return names;
     }
 }
