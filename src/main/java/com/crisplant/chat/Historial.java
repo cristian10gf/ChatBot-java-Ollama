@@ -16,18 +16,26 @@ public class Historial {
      * An array to store the current chat session.
      */
     public static String[] chatActual = new String[30];
-
+    
+    private static int pos = 0;
+    
     /**
      * Adds the current chat session to the chat history.
      * The current chat session is added to the first empty row in the history.
+     * @param chat
      */
-    public static void addChat() {
+    public static void addChat(String[] chat) {
+        historial[next()] = chat;
+    }
+    
+    private static int next() {
         for (int i = 0; i < historial.length; i++) {
             if (historial[i][0] == null) {
-                historial[i] = chatActual;
-                break;
+                pos = i;
+                return i;
             }
         }
+        return 0;
     }
 
     /**
@@ -57,12 +65,13 @@ public class Historial {
     public static void showHistorial() {
         for (int i = 0; i < historial.length; i++) {
             if (historial[i][0] != null) {
-                System.out.println("Chat " + i + ":");
+                System.out.print("Chat " + i + ":");
                 for (int j = 0; j < historial[i].length; j++) {
                     if (historial[i][j] != null) {
-                        System.out.println(historial[i][j]);
+                        System.out.print(historial[i][j]+",");
                     }
                 }
+                System.out.println("");
             }
         }
     }
@@ -75,7 +84,7 @@ public class Historial {
      * @param respuesta the response to the message
      */
     public static void addMensaje(String promt, String respuesta) {
-        for (int i = 0; i < chatActual.length; i++) {
+        for (int i = 0; i < chatActual.length; i = i + 2) {
             if (chatActual[i] == null) {
                 chatActual[i] = promt;
                 chatActual[i + 1] = respuesta;
@@ -91,7 +100,7 @@ public class Historial {
     public static void showChatActual() {
         for (int i = 0; i < chatActual.length; i++) {
             if (chatActual[i] != null) {
-                System.out.println(chatActual[i]);
+                System.out.print(chatActual[i]+", ");
             }
         }
     }
@@ -101,7 +110,7 @@ public class Historial {
      * The current chat session is reset to an empty state.
      */
     public static void deleteChatActual() {
-        chatActual = new String[30];
+        historial[pos] = new String[30];
     }
 
     /**
@@ -112,6 +121,7 @@ public class Historial {
      */
     public static void setChatActual(int index) {
         chatActual = historial[index];
+        pos = index;
     }
 
     /**
@@ -120,8 +130,7 @@ public class Historial {
      * and setting up a new chat array with a fixed size of 30.
      */
     public static void crearNuevoChat() {
-        addChat();
-        chatActual = new String[30];
+        chatActual = historial[next()];
     }
 
     /**

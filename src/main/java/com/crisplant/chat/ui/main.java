@@ -21,7 +21,7 @@ public class main extends javax.swing.JFrame {
         out.setText("");
         String allMesagge = "";
         String[] chat = Historial.chatActual;
-        for (int i = 0; i < chat.length-1; i = i+1) {
+        for (int i = 0; i < chat.length-2; i = i+2) {
             if (chat[i] != null) {
                 allMesagge = allMesagge + "\n User: "+ chat[i] + "\n Bot: " + chat[i+1] + "\n";
             }
@@ -34,7 +34,7 @@ public class main extends javax.swing.JFrame {
 
         if (!promt.isEmpty()) {
             Historial.addMensaje(promt, promt);
-            String respuesta = promt; // API.sendMessageAPI(promt);
+            String respuesta = promt; // API.verificarEstadoAPI(promt);
             out.setText(out.getText() + "\n User:" + promt + "\n Bot: " + respuesta + "\n");
             input.setText("");
         }
@@ -94,8 +94,12 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        out.setEditable(false);
         out.setColumns(20);
+        out.setFont(out.getFont().deriveFont(out.getFont().getSize()+1f));
         out.setRows(5);
+        out.setWrapStyleWord(true);
+        out.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(out);
 
         reset.setText("Limpiar");
@@ -137,10 +141,11 @@ public class main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
                         .addComponent(reset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)))
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
