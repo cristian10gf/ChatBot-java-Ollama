@@ -32,12 +32,12 @@ public class main extends javax.swing.JFrame {
     private void enviarMensaje() {
         String promt = input.getText();
 
-        if (!promt.isEmpty()) {
-            Historial.addMensaje(promt, promt);
-            String respuesta = promt; // API.verificarEstadoAPI(promt);
-            out.setText(out.getText() + "\n User:" + promt + "\n Bot: " + respuesta + "\n");
-            input.setText("");
-        }
+        if (promt.isEmpty()) return;
+        
+        String respuesta = "Respuesta del chatBot"; // API.verificarEstadoAPI(promt);
+        Historial.addMensaje(promt, "Respuesta del chatBot");
+        out.setText(out.getText() + "\n User:" + promt + "\n Bot: " + respuesta + "\n");
+        input.setText("");
     }
 
     @SuppressWarnings("unchecked")
@@ -71,17 +71,18 @@ public class main extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(historial);
 
+        input.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                inputKeyPressed(evt);
+            }
+        });
+
         enviar.setBackground(new java.awt.Color(153, 255, 255));
         enviar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         enviar.setText("Enviar");
         enviar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 enviarMouseClicked(evt);
-            }
-        });
-        enviar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                enviarKeyTyped(evt);
             }
         });
 
@@ -167,23 +168,17 @@ public class main extends javax.swing.JFrame {
     private void historialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historialMouseClicked
         int indice = historial.getSelectedIndex();
         Historial.setChatActual(indice);
-
         updateChatActual();
     }//GEN-LAST:event_historialMouseClicked
 
     private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
         Historial.deleteChatActual();
-        
         updateChatActual();
     }//GEN-LAST:event_resetMouseClicked
 
-    private void enviarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_enviarKeyTyped
-        // validar si se presionó la tecla Enter
-        if (evt.getKeyCode() == 10) {
-            enviarMensaje();
-        }
-        System.out.println(evt.getKeyCode());
-    }//GEN-LAST:event_enviarKeyTyped
+    private void inputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputKeyPressed
+        if (evt.getKeyCode() == 10) enviarMensaje(); // validar si se presionó la tecla Enter
+    }//GEN-LAST:event_inputKeyPressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

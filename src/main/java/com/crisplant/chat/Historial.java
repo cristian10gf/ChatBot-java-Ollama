@@ -111,6 +111,7 @@ public class Historial {
      */
     public static void deleteChatActual() {
         historial[pos] = new String[30];
+        chatActual = historial[pos];
     }
 
     /**
